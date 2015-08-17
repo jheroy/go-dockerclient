@@ -280,7 +280,10 @@ func (c *Client) PullImage(opts PullImageOptions, auth AuthConfiguration) error 
 	if err != nil {
 		return err
 	}
-	return c.createImage(queryString(&opts), headers, nil, opts.OutputStream, opts.RawJSONStream)
+
+	v := url.Values{}
+	v.Set("fromImage", fmt.Sprintf("%s/%s:%s", opts.Registry, opts.Repository, opts.Tag))
+	return c.createImage(v.Encode(), headers, nil, opts.OutputStream, opts.RawJSONStream)
 }
 
 func (c *Client) createImage(qs string, headers map[string]string, in io.Reader, w io.Writer, rawJSONStream bool) error {
