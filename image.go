@@ -282,7 +282,7 @@ func (c *Client) PullImage(opts PullImageOptions, auth AuthConfiguration) error 
 	}
 
 	v := url.Values{}
-	v.Set("fromImage", fmt.Sprintf("%s/%s:%s", opts.Registry, opts.Repository, opts.Tag))
+	v.Set("fromImage", opts.Repository)
 	return c.createImage(v.Encode(), headers, nil, opts.OutputStream, opts.RawJSONStream)
 }
 
